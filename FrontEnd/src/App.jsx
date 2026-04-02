@@ -1,26 +1,35 @@
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
-import BookingForm from "./components/BookingForm";
-import { Phone, MessageCircle } from "lucide-react";
+import ErrorBoundary from "./components/ErrorBoundary";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+// Lazy Load Pages for Production Performance
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Services = lazy(() => import("./pages/Services"));
+const Contact = lazy(() => import("./pages/Contact"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-background">
-        <Navbar />
-        
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
+    <ErrorBoundary>
+      <Router>
+        <div className="min-h-screen bg-background text-white selection:bg-accent selection:text-background">
+          <Navbar />
+          
+          <main>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </main>
+
 
         <footer className="bg-primary/50 py-12 px-6 border-t border-white/5">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -72,7 +81,8 @@ function App() {
         </div>
       </div>
     </Router>
-  );
+  </ErrorBoundary>
+);
 }
 
 export default App;
