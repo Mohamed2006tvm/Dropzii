@@ -209,35 +209,36 @@ export default function Home() {
             whileInView="animate"
             viewport={viewportConfig}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-10"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
-              { type: "Hatchback", seats: "4+1", price: "₹12/km", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=400" },
-              { type: "Sedan", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400" },
-              { type: "SUV / Innova", seats: "7+1", price: "₹18/km", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=400" },
+              { type: "Sedan", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600" },
+              { type: "Etios", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=600" },
+              { type: "SUV", seats: "7+1", price: "₹19/km", img: "https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=600" },
+              { type: "MUV (Innova)", seats: "7+1", price: "₹20/km", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" },
             ].map((v, i) => (
               <motion.div
                 key={i}
                 variants={fadeInUp}
                 className="vehicle-card bg-white/[0.03] backdrop-blur-xl border border-white/5 shadow-premium rounded-[2.5rem] p-0 overflow-hidden group transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px]"
               >
-                <div className="h-64 overflow-hidden relative">
+                <div className="h-48 overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10 opacity-60" />
                   <img src={v.img} alt={v.type} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
                 <div className="p-8">
                   <div className="flex justify-between items-center mb-6">
-                    <h4 className="text-3xl font-extrabold tracking-tight text-white">{v.type}</h4>
-                    <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold uppercase border border-accent/20">{v.seats} Seats</span>
+                    <h4 className="text-2xl font-extrabold tracking-tight text-white">{v.type}</h4>
+                    <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-accent/20 whitespace-nowrap">{v.seats} Seats</span>
                   </div>
-                  <p className="text-white/30 mb-8 italic text-sm leading-relaxed font-medium">Perfectly curated for discerning travelers and luxury outstation experiences.</p>
+                  <p className="text-white/30 mb-8 italic text-xs leading-relaxed font-medium">Perfectly curated for discerning travelers and luxury outstation experiences.</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-extrabold tracking-tight text-white">{v.price} <span className="text-xs font-bold text-white/20 uppercase">/ km</span></span>
+                    <span className="text-2xl font-extrabold tracking-tight text-white">{v.price} <span className="text-[10px] font-bold text-white/20 uppercase">/ km</span></span>
                     <button
                       onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-                      className="text-accent text-sm font-bold flex items-center gap-1 group/btn hover:text-white transition-colors uppercase tracking-widest"
+                      className="text-accent text-xs font-bold flex items-center gap-1 group/btn hover:text-white transition-colors uppercase tracking-widest"
                     >
-                      Reserve <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                      Reserve <ChevronRight size={12} className="group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>

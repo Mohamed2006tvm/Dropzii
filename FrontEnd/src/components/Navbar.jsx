@@ -42,17 +42,19 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group relative">
-          <div className="absolute -inset-2 bg-accent/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-          <div className="bg-accent p-2 rounded-xl rotate-[-10deg] group-hover:rotate-0 transition-transform duration-500 shadow-accent-glow">
-            <span className="text-luxury-charcoal font-black text-xl italic uppercase tracking-tighter">DZ</span>
+        <Link to="/" className="flex items-center gap-4 group relative">
+          <div className="absolute -inset-4 bg-accent/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <img 
+            src="/assets/logo1.png" 
+            alt="Dropzii" 
+            className="h-16 md:h-20 object-contain drop-shadow-accent-glow group-hover:scale-105 transition-transform duration-500" 
+          />
+          <div className="flex items-baseline">
+            <span className="text-2xl md:text-3xl font-black tracking-widest text-white">DROPZ</span>
+            <span className="text-2xl md:text-3xl font-black tracking-widest text-accent">II</span>
           </div>
-          <div className="flex flex-col">
-            <span className="text-2xl font-black italic tracking-tighter text-white uppercase leading-none">Dropzii</span>
-            <span className="text-[10px] font-bold text-accent uppercase tracking-[0.4em] leading-none mt-1">Luxury Taxi</span>
-          </div>
+          
         </Link>
-
         {/* Desktop Links */}
         <div className="hidden lg:flex items-center gap-10">
           <div className="flex items-center gap-8 bg-white/5 backdrop-blur-xl px-8 py-3 rounded-2xl border border-white/5 shadow-inner">

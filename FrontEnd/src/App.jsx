@@ -50,7 +50,9 @@ function App() {
         <footer className="bg-primary/50 py-12 px-6 border-t border-white/5">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="space-y-4 col-span-1 md:col-span-2">
-              <h3 className="text-2xl font-bold italic tracking-tight">Dr<span className="text-accent">o</span>pz<span className="text-accent">ii</span></h3>
+              <Link to="/" className="block">
+                <img src="/assets/logo1.png" alt="Dropzii" className="h-20 md:h-24 object-contain -ml-2" />
+              </Link>
               <p className="text-white/50 max-w-sm">
                 Premium one-way taxi service across South India (TN, KL, KA, AP). Safe, reliable, and affordable rides for all your travel needs.
               </p>
