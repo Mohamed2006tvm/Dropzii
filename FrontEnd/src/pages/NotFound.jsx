@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Home, MoveRight } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6 text-center relative overflow-hidden">
+      <SEO 
+        title="404 - Page Not Found" 
+        description="The page you are looking for does not exist. Return to Dropzii home for premium taxi bookings." 
+      />
       {/* Background Glows */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px]" />
