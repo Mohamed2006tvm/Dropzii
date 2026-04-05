@@ -1,133 +1,156 @@
-import { Phone, Mail, MessageCircle, MapPin, Send } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Mail, Phone, MapPin, Send, MessageCircle, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer, viewportConfig } from "../utils/animations";
+import { useToast } from "../context/ToastContext";
+import SEO from "../components/SEO";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    message: ""
-  });
+  const { showToast } = useToast();
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Message sent successfully! Our team will contact you shortly.");
-    setFormData({ name: "", phone: "", message: "" });
+    setIsSubmitting(true);
+
+    const submissionData = {
+      access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "94152d23-0038-4451-bd19-93dddae345f5",
+      ...formData,
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(submissionData),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        showToast("Message sent successfully!", "success");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      showToast("Something went wrong.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="pt-24 pb-12">
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-            <div className="space-y-12">
-              <div className="space-y-4">
-                <h1 className="text-5xl md:text-7xl font-black tracking-tighter">Get in <span className="text-accent underline decoration-white/5">Touch</span></h1>
-                <p className="text-white/50 text-lg max-w-mdital">Have questions about our rates or coverage? We're here to help you 24/7.</p>
-              </div>
-
-              <div className="space-y-8">
-                <a href="tel:+91XXXXXXXXXX" className="flex items-center gap-6 group">
-                  <div className="bg-primary p-5 rounded-2xl border border-white/5 group-hover:border-accent/50 transition-colors">
-                    <Phone className="text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/30 uppercase font-black tracking-widest">Call Us</p>
-                    <p className="text-xl font-bold">+91 XXXXX XXXXX</p>
-                  </div>
-                </a>
-                
-                <a href="mailto:info@tamiltaxi.in" className="flex items-center gap-6 group">
-                  <div className="bg-primary p-5 rounded-2xl border border-white/5 group-hover:border-accent/50 transition-colors">
-                    <Mail className="text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/30 uppercase font-black tracking-widest">Email Us</p>
-                    <p className="text-xl font-bold">info@tamiltaxi.in</p>
-                  </div>
-                </a>
-
-                <a href="https://wa.me/91XXXXXXXXXX" className="flex items-center gap-6 group">
-                  <div className="bg-primary p-5 rounded-2xl border border-white/5 group-hover:border-accent/50 transition-colors">
-                    <MessageCircle className="text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/30 uppercase font-black tracking-widest">WhatsApp</p>
-                    <p className="text-xl font-bold">+91 XXXXX XXXXX</p>
-                  </div>
-                </a>
-
-                <div className="flex items-center gap-6 group">
-                  <div className="bg-primary p-5 rounded-2xl border border-white/5">
-                    <MapPin className="text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/30 uppercase font-black tracking-widest">Our Office</p>
-                    <p className="text-xl font-bold">Madurai, Tamil Nadu</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] p-10 h-fit bg-luxury-light/50">
-
-              <h3 className="text-3xl font-black mb-8 italic">Send a Message</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="text-xs font-black uppercase tracking-widest text-white/40 mb-2 block ml-1">Full Name</label>
-                  <input 
-                    required
-                    type="text" 
-                    className="bg-glass border border-glass-border rounded-2xl px-5 py-4 focus:outline-none focus:border-accent/40 focus:bg-glass-hover transition-all duration-300 w-full text-white placeholder:text-white/20 py-4" 
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-black uppercase tracking-widest text-white/40 mb-2 block ml-1">Phone Number</label>
-                  <input 
-                    required
-                    type="tel" 
-                    className="bg-glass border border-glass-border rounded-2xl px-5 py-4 focus:outline-none focus:border-accent/40 focus:bg-glass-hover transition-all duration-300 w-full text-white placeholder:text-white/20 py-4" 
-                    placeholder="Enter phone number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-black uppercase tracking-widest text-white/40 mb-2 block ml-1">Message</label>
-                  <textarea 
-                    required
-                    className="bg-glass border border-glass-border rounded-2xl px-5 py-4 focus:outline-none focus:border-accent/40 focus:bg-glass-hover transition-all duration-300 w-full text-white placeholder:text-white/20 py-4 min-h-[150px] resize-none" 
-                    placeholder="Tell us about your requirement..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  ></textarea>
-                </div>
-                <button type="submit" className="bg-accent text-luxury-charcoal font-black py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 w-full py-5 text-lg flex items-center justify-center gap-3">
-                  Send Message <Send size={20} />
-                </button>
-
-              </form>
-            </div>
+    <div className="pt-32 pb-32 px-6 bg-background">
+      <SEO 
+        title="Contact Us - 24/7 Customer Support" 
+        description="Have questions or need a specialized taxi quote? Contact the Dropzii team 24/7 for instant assistance and luxury one-way travel support." 
+      />
+      <div className="max-w-7xl mx-auto space-y-20">
+        {/* Header */}
+        <motion.div 
+          initial="initial"
+          whileInView="animate"
+          viewport={viewportConfig}
+          variants={fadeInUp}
+          className="text-center space-y-6"
+        >
+          <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-5 py-2 rounded-full text-accent text-[11px] font-bold uppercase tracking-[0.3em] backdrop-blur-md">
+            Get in Touch
           </div>
-        </div>
-      </section>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter italic uppercase text-white leading-none">
+            Direct <span className="text-accent">Access</span>
+          </h1>
+          <p className="text-white/40 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed italic">
+            Questions or specialized requests? Our team is ready 24/7.
+          </p>
+        </motion.div>
 
-      {/* Basic Map Section Placeholder */}
-      <section className="px-6 py-20">
-        <div className="max-w-7xl mx-auto h-[400px] rounded-[3rem] overflow-hidden grayscale border border-white/5 opacity-50 contrast-125">
-          <iframe 
-            title="Tamil Nadu Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.12345678!2d78.11!3d9.92!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b118c533%3A0x7ef1010c2d3ea9c9!2sMadurai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin" 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowFullScreen="" 
-            loading="lazy"
-          ></iframe>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          {/* Contact Info */}
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            className="space-y-8"
+          >
+            {[
+              { icon: <Phone />, title: "Call Hotline", text: "+91 94420 59952", link: "tel:+919442059952" },
+              { icon: <Mail />, title: "Concierge Email", text: "dropziitaxi@gmail.com", link: "mailto:dropziitaxi@gmail.com" },
+              { icon: <MessageCircle />, title: "WhatsApp Support", text: "Instant Support", link: "https://wa.me/919442059952" },
+            ].map((item, i) => (
+              <motion.a 
+                key={i} 
+                href={item.link}
+                variants={fadeInUp}
+                className="group flex items-center gap-6 bg-glass p-8 rounded-[2.5rem] border border-white/5 hover:border-accent/40 transition-all"
+                target={item.link.startsWith("http") ? "_blank" : "_self"}
+                rel="noopener noreferrer"
+              >
+                <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-luxury-charcoal transition-all">
+                  <item.icon.type {...item.icon.props} size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30">{item.title}</h3>
+                  <p className="text-xl font-black text-white group-hover:text-accent transition-colors">{item.text}</p>
+                </div>
+              </motion.a>
+            ))}
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={viewportConfig}
+            className="bg-glass border border-white/5 rounded-[3rem] p-10 md:p-14 shadow-luxury"
+          >
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input
+                  required
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-accent/40"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                />
+                <input
+                  required
+                  type="tel"
+                  placeholder="Phone"
+                  className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-accent/40"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                />
+              </div>
+              <input
+                required
+                type="email"
+                placeholder="Email Address"
+                className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-accent/40"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+              <textarea
+                required
+                rows={4}
+                placeholder="Message"
+                className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-accent/40 resize-none"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-accent text-luxury-charcoal font-black py-4 rounded-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-sm"
+              >
+                {isSubmitting ? "Sending..." : "Send Message"} <ChevronRight size={18} />
+              </button>
+            </form>
+          </motion.div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

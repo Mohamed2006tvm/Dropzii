@@ -1,283 +1,370 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import {
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+  viewportConfig
+} from "../utils/animations";
 import BookingForm from "../components/BookingForm";
 import { Shield, Clock, IndianRupee, Star, ChevronRight, UserCheck, MapPin } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import SEO from "../components/SEO";
 
 export default function Home() {
-  const heroRef = useRef(null);
-  const featuresRef = useRef(null);
-  const routesRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Hero Animation
-      gsap.from(".hero-content > *", {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out"
-      });
-
-      gsap.from(".hero-form", {
-        x: 100,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out",
-        delay: 0.5
-      });
-
-      // Scroll Animations
-      gsap.from(".feature-card", {
-        scrollTrigger: {
-          trigger: featuresRef.current,
-          start: "top 80%",
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  const features = [
-    { icon: <IndianRupee />, title: "Affordable Rates", desc: "No hidden charges, transparent pricing for every trip." },
-    { icon: <Shield />, title: "Safe & Secure", desc: "Verified drivers and 24/7 emergency support." },
-    { icon: <Clock />, title: "Always On Time", desc: "Reliable airport pickups and outstation rides." },
-    { icon: <UserCheck />, title: "Verified Drivers", desc: "Professional, polite, and local-expertise drivers." },
-  ];
-
-  const routes = [
-    { from: "Chennai", to: "Madurai", price: "4500" },
-    { from: "Coimbatore", to: "Chennai", price: "5200" },
-    { from: "Madurai", to: "Trichy", price: "2400" },
-    { from: "Trichy", to: "Chennai", price: "3800" },
-  ];
-
-  const vehicles = [
-    { type: "Hatchback", seats: "4+1", price: "₹12/km", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=400" },
-    { type: "Sedan", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400" },
-    { type: "SUV / Innova", seats: "7+1", price: "₹18/km", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=400" },
-  ];
-
   return (
     <div className="overflow-hidden">
+      <SEO 
+        title="Premium One-Way & Outstation Taxi" 
+        description="Book affordable, safe, and luxury one-way outstation taxis across South India. Serving Chennai, Madurai, Coimbatore, and Bangalore with verified drivers." 
+      />
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[90vh] flex items-center pt-20 pb-12 px-6">
+      <section className="relative min-h-[100vh] flex items-center pt-20 pb-20 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-10" />
-          <img 
-            src="/assets/hero_taxi_highway.png" // This will be the generated image
-            alt="Taxi background" 
-            className="w-full h-full object-cover opacity-40"
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent z-10" />
+          <img
+            src="/assets/hero_taxi_highway.png"
+            alt="Taxi background"
+            className="w-full h-full object-cover scale-105"
           />
         </div>
 
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-20">
-          <div className="hero-content space-y-8 flex flex-col justify-center text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-1 rounded-full text-accent text-sm font-bold self-center lg:self-start mb-2">
-              <Star size={14} fill="currentColor" className="animate-pulse" /> Premium Travel Service
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-7xl font-black leading-tight tracking-tighter font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative z-20">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+            className="hero-content space-y-10 flex flex-col justify-center text-center lg:text-left pt-10 lg:pt-0"
+          >
+            <motion.div
+              variants={fadeInUp}
+              className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-5 py-2 rounded-full text-accent text-[11px] font-bold uppercase tracking-widest self-center lg:self-start mb-4 backdrop-blur-md pulse-accent"
+            >
+              <MapPin size={14} className="fill-accent/20" />
+              South India's #1 Taxi Service
+            </motion.div>
 
-              Book <span className="text-accent  decoration-white/10 italic">One-Way</span> Taxi in Tamil Nadu
-            </h1>
-            <p className="text-lg md:text-xl text-white/40 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-              Experience the pinnacle of reliable airport pickups, outstation trips, and one-way rides. 
-              Safe, fast, and effortlessly professional travel across the state.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-4">
-              <button className="bg-accent text-luxury-charcoal font-black py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 group">Book Your Journey <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" /></button>
-              <a href="#pricing" className="bg-white/5 text-white font-bold py-4 px-8 rounded-2xl border border-white/10 transition-all duration-500 hover:bg-white/10 hover:border-white/20">View Pricing</a>
+            <motion.h1
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-white drop-shadow-2xl"
+            >
+              <span className="block">Book One-Way Taxi</span>
+              <span className="opacity-90 block mt-2">in South India</span>
+              <span className="text-accent italic block mt-2">Fast & Affordable</span>
+            </motion.h1>
 
-            </div>
-          </div>
+            <motion.p
+              variants={fadeInUp}
+              className="text-sm md:text-lg text-white/50 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed"
+            >
+              Airport Pickup • Outstation • One-Way Rides — <span className="text-white/70">Transparent pricing, verified drivers, and 24/7 service across South India (TN, KL, KA, AP).</span>
+            </motion.p>
 
-          <div className="hero-form flex justify-center lg:justify-end">
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-wrap gap-4 justify-center lg:justify-start pt-4"
+            >
+              <button
+                onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-accent text-luxury-charcoal font-bold py-3 px-6 rounded-xl transition-all duration-700 hover:scale-[1.05] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 group relative overflow-hidden text-sm uppercase tracking-wider"
+              >
+                <span className="relative z-10">Book Now</span>
+                <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform relative z-10" />
+                <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              </button>
+              <Link to="/services" className="bg-white/5 backdrop-blur-xl text-white font-bold py-3 px-6 rounded-xl border border-white/10 transition-all duration-700 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] text-sm flex items-center">
+                Our Services
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            id="booking"
+            initial="initial"
+            animate="animate"
+            variants={scaleIn}
+            className="hero-form flex justify-center lg:justify-end items-center relative"
+          >
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
             <BookingForm />
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section ref={featuresRef} className="py-32 px-6 relative">
+      <section className="py-24 px-6 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-accent font-black uppercase tracking-[0.3em] text-xs mb-4">The Standard</h2>
-            <h3 className="text-4xl md:text-6xl font-black font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Experience Premium Travel</h3>
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={fadeInUp}
+            className="text-center mb-16 section-header"
+          >
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">Why Choose Us</h3>
+            <p className="text-white/60 text-lg font-medium">We provide the best taxi experience in South India (TN, KL, KA, AP)</p>
+          </motion.div>
 
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((f, i) => (
-              <div key={i} className="feature-card bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] group">
-
-                <div className="bg-accent/10 p-5 rounded-2xl w-fit mb-8 text-accent group-hover:scale-110 group-hover:shadow-accent-glow transition-all duration-500">
-                  {f.icon}
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
+            {[
+              { icon: <Shield className="w-8 h-8" />, title: "Fully Insured", desc: "Your safety is our top priority with comprehensive insurance coverage." },
+              { icon: <Clock className="w-8 h-8" />, title: "On-time Policy", desc: "Professional drivers who respect your time for every single trip." },
+              { icon: <IndianRupee className="w-8 h-8" />, title: "Best Price", desc: "Transparent pricing with zero hidden charges or extra baggage fees." },
+              { icon: <Star className="w-8 h-8" />, title: "Top Rated", desc: "Highly experienced drivers maintaining 5-star service standards." }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-8px] group feature-card"
+              >
+                <div className="bg-accent/10 p-4 rounded-2xl w-fit mb-6 text-accent group-hover:bg-accent group-hover:text-background transition-colors duration-500">
+                  {item.icon}
                 </div>
-                <h4 className="text-2xl font-bold mb-4 tracking-tight">{f.title}</h4>
-                <p className="text-white/40 text-sm leading-relaxed">{f.desc}</p>
-              </div>
+                <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
+                <p className="text-white/50 leading-relaxed text-sm">{item.desc}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Popular Routes */}
-      <section ref={routesRef} id="pricing" className="py-32 px-6 bg-glass/60">
-
+      <section id="pricing" className="py-24 px-6 bg-glass">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 text-center md:text-left">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={fadeInUp}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16 section-header"
+          >
             <div>
-              <h2 className="text-accent font-black uppercase tracking-[0.3em] text-xs mb-4">Select Journeys</h2>
-              <h3 className="text-4xl md:text-6xl font-black font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Best Rates Guaranteed</h3>
-
+              <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">Popular Routes</h3>
+              <p className="text-white/60 text-lg font-medium">One-way taxi at the best prices across South India</p>
             </div>
-            <button className="bg-white/5 text-white font-bold py-4 px-8 rounded-2xl border border-white/10 transition-all duration-500 hover:bg-white/10 hover:border-white/20 group">Explore All Routes <ChevronRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform"  /></button>
+            <Link to="/popular-routes" className="flex items-center gap-2 text-accent font-bold text-sm uppercase tracking-widest hover:text-white transition-colors whitespace-nowrap border-b border-accent/0 hover:border-white pb-1 self-start md:self-auto">
+              View All <ChevronRight size={16} />
+            </Link>
+          </motion.div>
 
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {routes.map((r, i) => (
-              <div key={i} className="bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] flex flex-col justify-between hover:bg-glass-hover p-10">
-
-
-                <div className="flex items-center gap-6 mb-8">
-                  <div className="flex flex-col items-center">
-                    <div className="w-2.5 h-2.5 bg-accent rounded-full shadow-accent-glow" />
-                    <div className="w-px h-12 bg-gradient-to-b from-accent to-white/5 my-1" />
-                    <div className="w-2.5 h-2.5 border border-accent rounded-full" />
-                  </div>
-                  <div className="space-y-6">
-                    <h5 className="font-black text-xl tracking-tight">{r.from}</h5>
-                    <h5 className="font-black text-xl tracking-tight">{r.to}</h5>
-                  </div>
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {[
+              { from: "Chennai", to: "Pondicherry", price: "2500", time: "3h", dist: "150km" },
+              { from: "Madurai", to: "Chennai", price: "7500", time: "8h", dist: "460km" },
+              { from: "Bangalore", to: "Chennai", price: "6000", time: "6h", dist: "350km" },
+              { from: "Coimbatore", to: "Madurai", price: "3500", time: "4h", dist: "210km" }
+            ].map((route, i) => (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] group relative overflow-hidden route-card"
+              >
+                <div className="absolute top-0 right-0 p-4">
+                  <ChevronRight className="text-accent/20 group-hover:text-accent transition-colors" />
                 </div>
-                <div className="flex justify-between items-center mt-6 pt-6 border-t border-white/5">
-                  <span className="text-white/20 text-xs font-bold uppercase tracking-widest">Starts at</span>
-                  <span className="text-accent font-black text-2xl tracking-tighter">₹{r.price}*</span>
+                <div className="flex items-center gap-2 mb-4">
+                  <MapPin size={16} className="text-accent" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-accent">Top Route</span>
                 </div>
-              </div>
+                <h4 className="text-xl font-bold mb-2">{route.from} → {route.to}</h4>
+                <p className="text-white/50 text-sm mb-6">{route.dist} • {route.time} travel</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold text-white">₹{route.price}</span>
+                  <Link to={`/popular-routes`} className="text-accent text-sm font-bold border-b border-accent/0 hover:border-accent transition-all">Select</Link>
+                </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Vehicle Types */}
       <section className="py-32 px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-accent font-black uppercase tracking-[0.3em] text-xs mb-4">Our Fleet</h2>
-            <h3 className="text-4xl md:text-6xl font-black font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Choose Your Comfort</h3>
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={fadeInUp}
+            className="text-center mb-20"
+          >
+            <h2 className="text-accent font-bold uppercase tracking-[0.3em] text-xs mb-4">Our Fleet</h2>
+            <h3 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Choose Your Comfort</h3>
+          </motion.div>
 
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {vehicles.map((v, i) => (
-              <div key={i} className="bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] p-0 overflow-hidden group border-white/5">
-
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-10"
+          >
+            {[
+              { type: "Hatchback", seats: "4+1", price: "₹12/km", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=400" },
+              { type: "Sedan", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=400" },
+              { type: "SUV / Innova", seats: "7+1", price: "₹18/km", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=400" },
+            ].map((v, i) => (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="vehicle-card bg-white/[0.03] backdrop-blur-xl border border-white/5 shadow-premium rounded-[2.5rem] p-0 overflow-hidden group transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px]"
+              >
                 <div className="h-64 overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10 opacity-60" />
                   <img src={v.img} alt={v.type} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
                 <div className="p-8">
                   <div className="flex justify-between items-center mb-6">
-                    <h4 className="text-3xl font-black tracking-tighter">{v.type}</h4>
-                    <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-black uppercase border border-accent/20">{v.seats} Seats</span>
+                    <h4 className="text-3xl font-extrabold tracking-tight text-white">{v.type}</h4>
+                    <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-bold uppercase border border-accent/20">{v.seats} Seats</span>
                   </div>
                   <p className="text-white/30 mb-8 italic text-sm leading-relaxed font-medium">Perfectly curated for discerning travelers and luxury outstation experiences.</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-black tracking-tighter">{v.price} <span className="text-xs font-bold text-white/20 uppercase">/ km</span></span>
-                    <button className="text-accent text-sm font-black flex items-center gap-1 group/btn hover:text-white transition-colors uppercase tracking-widest">
+                    <span className="text-2xl font-extrabold tracking-tight text-white">{v.price} <span className="text-xs font-bold text-white/20 uppercase">/ km</span></span>
+                    <button
+                      onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="text-accent text-sm font-bold flex items-center gap-1 group/btn hover:text-white transition-colors uppercase tracking-widest"
+                    >
                       Reserve <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* How It Works */}
       <section className="py-32 px-6 bg-glass/60">
-
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-accent font-black uppercase tracking-[0.3em] text-xs mb-4">Our Process</h2>
-            <h3 className="text-4xl md:text-6xl font-black font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Seamless Journey</h3>
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={fadeInUp}
+            className="text-center mb-20"
+          >
+            <h2 className="text-accent font-bold uppercase tracking-[0.3em] text-xs mb-4">Our Process</h2>
+            <h3 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Seamless Journey</h3>
+          </motion.div>
 
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-4 gap-12"
+          >
             {[
               { step: "01", title: "Instant Booking", desc: "Digital form with exact location intelligence." },
               { step: "02", title: "Direct Connect", desc: "Immediate WhatsApp confirmation from our team." },
               { step: "03", title: "Premium Pickup", desc: "Punctual arrival with professional driver protocol." },
               { step: "04", title: "Secure Arrival", desc: "Safe destination reach with multiple payment options." },
             ].map((s, i) => (
-              <div key={i} className="text-center space-y-6 group">
-                <div className="text-7xl font-black text-glass/50 group-hover:text-accent/5 transition-colors leading-none">
-
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="text-center space-y-6 group"
+              >
+                <div className="text-7xl font-bold text-white/10 group-hover:text-accent/30 transition-all duration-500 leading-none">
                   {s.step}
                 </div>
-                <h4 className="text-2xl font-black tracking-tight">{s.title}</h4>
+                <h4 className="text-2xl font-bold tracking-tight">{s.title}</h4>
                 <p className="text-white/30 text-sm leading-relaxed font-medium">{s.desc}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-accent font-black uppercase tracking-[0.3em] text-xs mb-4">Feedback</h2>
-          <h3 className="text-4xl md:text-6xl font-black mb-20 font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Trusted by Connoisseurs</h3>
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={fadeInUp}
+          >
+            <h2 className="text-accent font-bold uppercase tracking-[0.3em] text-xs mb-4">Feedback</h2>
+            <h3 className="text-4xl md:text-6xl font-bold mb-20 font-extrabold tracking-tight leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">Trusted by Connoisseurs</h3>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            {[1, 2, 3].map((_, i) => (
-              <div key={i} className="bg-glass backdrop-blur-xl border border-glass-border shadow-premium rounded-[2.5rem] p-8 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] p-10 space-y-6 hover:bg-glass">
-
-
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={viewportConfig}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left"
+          >
+            {[
+              { name: "Rajesh Kumar", role: "Chennai Airport", initial: "RK" },
+              { name: "Priya Sharma", role: "Madurai Business Traveler", initial: "PS" },
+              { name: "Arun V.", role: "Outstation Client", initial: "AV" },
+            ].map((t, i) => (
+              <motion.div
+                key={i}
+                variants={fadeInUp}
+                className="testimonial-card bg-white/[0.03] backdrop-blur-xl border border-white/5 shadow-premium rounded-[2.5rem] p-10 space-y-6 transition-all duration-700 hover:border-accent/30 hover:translate-y-[-4px] hover:bg-white/[0.05]"
+              >
                 <div className="flex text-accent gap-1">
                   {[1, 2, 3, 4, 5].map(v => <Star key={v} size={14} fill="currentColor" />)}
                 </div>
-                <p className="text-white/50 italic leading-relaxed text-lg">
-                  "The most sophisticated one-way taxi service in Tamil Nadu. Professional protocol, impeccable vehicles, and absolute reliability."
+                <p className="text-white/50 italic leading-relaxed text-lg font-medium">
+                  "The most sophisticated one-way taxi service in South India. Professional protocol, impeccable vehicles, and absolute reliability."
                 </p>
                 <div className="flex items-center gap-4 pt-8 border-t border-white/5">
-                  <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center font-black text-accent text-lg">RK</div>
+                  <div className="w-12 h-12 bg-accent/20 rounded-2xl flex items-center justify-center font-bold text-accent text-lg">{t.initial}</div>
                   <div>
-                    <h5 className="font-bold text-lg tracking-tight">Rajesh Kumar</h5>
-                    <p className="text-xs text-white/20 uppercase font-black tracking-widest">Chennai Airport</p>
+                    <h5 className="font-bold text-lg tracking-tight text-white">{t.name}</h5>
+                    <p className="text-xs text-white/20 uppercase font-bold tracking-widest">{t.role}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 px-6">
-        <div className="max-w-6xl mx-auto rounded-[3rem] bg-accent p-16 md:p-24 text-luxury-charcoal text-center space-y-10 relative overflow-hidden group shadow-accent-glow">
+      <section className="py-20 px-6">
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={viewportConfig}
+          variants={scaleIn}
+          className="max-w-6xl mx-auto rounded-[3rem] bg-accent p-10 md:p-16 text-luxury-charcoal text-center space-y-8 relative overflow-hidden group shadow-accent-glow"
+        >
           <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-white/20 rounded-full blur-[120px]" />
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none">Ready to Begin Your Journey?</h2>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]">Ready to Begin Your Journey?</h2>
           <p className="text-xl md:text-2xl font-bold opacity-80 max-w-2xl mx-auto leading-relaxed">
             Reserve your premium one-way experience now. Impeccable service, guaranteed.
           </p>
-          <div className="flex flex-wrap gap-6 justify-center pt-8">
-            <button className="bg-luxury-charcoal text-white font-black px-12 py-5 rounded-2xl hover:scale-105 transition-all flex items-center gap-2 shadow-2xl">
+          <div className="flex flex-wrap gap-4 justify-center pt-4">
+            <button
+              onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-luxury-charcoal text-white font-bold px-8 py-4 rounded-2xl hover:scale-105 transition-all flex items-center gap-2 shadow-2xl whitespace-nowrap text-lg"
+            >
               Book Journey Now <ChevronRight />
             </button>
-            <a href="tel:+91XXXXXXXXXX" className="border-2 border-luxury-charcoal/20 font-black px-12 py-5 rounded-2xl hover:bg-luxury-charcoal/5 transition-all text-lg">
-              Consult with Agent
-            </a>
+            <Link to="/contact" className="border-2 border-luxury-charcoal/20 font-bold px-8 py-4 rounded-2xl hover:bg-luxury-charcoal/5 transition-all text-lg whitespace-nowrap">
+              Connect with us
+            </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );

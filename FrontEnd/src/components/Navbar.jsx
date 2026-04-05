@@ -1,92 +1,132 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Car } from "lucide-react";
-import { cn } from "../utils/cn";
+import { Menu, X, Phone, User, LogIn, ChevronRight, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { navbarVariants } from "../utils/animations";
+
+const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "Services", path: "/services" },
+  { name: "Popular Routes", path: "/popular-routes" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contact" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
-  ];
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   return (
-    <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6",
-      isScrolled ? "bg-background/80 backdrop-blur-md shadow-lg" : "bg-transparent"
-    )}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="bg-accent p-2 rounded-lg group-hover:rotate-12 transition-transform">
-            <Car className="text-background w-6 h-6" />
+    <motion.nav
+      initial="hidden"
+      animate="visible"
+      variants={navbarVariants}
+      className={`fixed w-full z-[100] transition-all duration-700 font-urbanist ${scrolled
+          ? "py-4 bg-background/80 backdrop-blur-2xl border-b border-white/5 shadow-premium"
+          : "py-6 bg-transparent"
+        }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3 group relative">
+          <div className="absolute -inset-2 bg-accent/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="bg-accent p-2 rounded-xl rotate-[-10deg] group-hover:rotate-0 transition-transform duration-500 shadow-accent-glow">
+            <span className="text-luxury-charcoal font-black text-xl italic uppercase tracking-tighter">DZ</span>
           </div>
-          <span className="text-xl font-black tracking-tighter text-white">
-            TAMIL<span className="text-accent">TAXI</span>
-          </span>
+          <div className="flex flex-col">
+            <span className="text-2xl font-black italic tracking-tighter text-white uppercase leading-none">Dropzii</span>
+            <span className="text-[10px] font-bold text-accent uppercase tracking-[0.4em] leading-none mt-1">Luxury Taxi</span>
+          </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-accent",
-                location.pathname === link.path ? "text-accent" : "text-white/70"
-              )}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <a href="tel:+91XXXXXXXXXX" className="bg-accent text-luxury-charcoal font-black py-2 px-4 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center gap-2 text-sm">
+        {/* Desktop Links */}
+        <div className="hidden lg:flex items-center gap-10">
+          <div className="flex items-center gap-8 bg-white/5 backdrop-blur-xl px-8 py-3 rounded-2xl border border-white/5 shadow-inner">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className={`text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 relative py-2 block ${location.pathname === link.path
+                    ? "text-accent"
+                    : "text-white/40 hover:text-white"
+                  }`}
+              >
+                {link.name}
+                {location.pathname === link.path && (
+                  <motion.div
+                    layoutId="navTab"
+                    className="absolute bottom-0 left-0 w-full h-[2px] bg-accent shadow-accent-glow"
+                  />
+                )}
+              </Link>
+            ))}
+          </div>
 
-            <Phone className="w-4 h-4" /> Call Now
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="tel:+919442059952"
+              className="bg-accent text-luxury-charcoal px-6 py-3 rounded-xl font-bold hover:scale-105 active:scale-95 transition-all shadow-accent-glow flex items-center gap-2 text-xs uppercase tracking-widest"
+            >
+              <Phone size={16} /> Call Now
+            </a>
+          </div>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white"
+        <button
+          className="lg:hidden p-3 bg-white/5 border border-white/5 rounded-xl text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      <div className={cn(
-        "fixed inset-0 bg-background/95 z-40 flex flex-col items-center justify-center gap-8 md:hidden transition-transform duration-500",
-        isOpen ? "translate-x-0" : "translate-x-full"
-      )}>
-        {navLinks.map((link) => (
-          <Link
-            key={link.name}
-            to={link.path}
-            onClick={() => setIsOpen(false)}
-            className="text-2xl font-bold hover:text-accent"
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-background/95 backdrop-blur-3xl border-b border-white/5 overflow-hidden"
           >
-            {link.name}
-          </Link>
-        ))}
-        <a href="tel:+91XXXXXXXXXX" className="bg-accent text-luxury-charcoal font-black py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center gap-2 mt-4">
-
-          <Phone /> Call Now
-        </a>
-      </div>
-    </nav>
+            <div className="px-6 py-10 flex flex-col gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`text-lg font-bold uppercase tracking-[0.2em] ${location.pathname === link.path ? "text-accent" : "text-white/40"
+                    }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-6 border-t border-white/5">
+                <a
+                  href="tel:+919442059952"
+                  className="w-full bg-accent text-luxury-charcoal font-bold px-6 py-3 rounded-2xl flex items-center justify-center gap-3 text-sm uppercase tracking-wider shadow-accent-glow"
+                >
+                  <Phone size={20} /> Call Now
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 }

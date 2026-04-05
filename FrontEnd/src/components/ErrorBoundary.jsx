@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component {
             <div className="bg-red-500/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 border border-red-500/20">
               <ShieldAlert className="text-red-500 w-12 h-12" />
             </div>
-            <h1 className="text-4xl font-black tracking-tighter leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold tracking-tight leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
               Something went wrong
             </h1>
             <p className="text-white/50 leading-relaxed">
@@ -31,7 +31,7 @@ class ErrorBoundary extends React.Component {
             </p>
             <button 
               onClick={() => window.location.reload()}
-              className="bg-accent text-luxury-charcoal font-black py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 w-full"
+              className="bg-accent text-luxury-charcoal font-bold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 w-full"
             >
               <RotateCcw size={20} /> Reload Application
             </button>

@@ -10,10 +10,10 @@ export default function NotFound() {
 
       <div className="max-w-lg w-full space-y-12 relative z-10">
         <div className="space-y-4">
-          <h1 className="text-[12rem] font-black leading-none tracking-tighter bg-gradient-to-b from-white to-slate-800 bg-clip-text text-transparent opacity-20">
+          <h1 className="text-[12rem] font-bold leading-none tracking-tight bg-gradient-to-b from-white to-slate-800 bg-clip-text text-transparent opacity-20">
             404
           </h1>
-          <h2 className="text-5xl font-black tracking-tighter -mt-20 leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
+          <h2 className="text-5xl font-bold tracking-tight -mt-20 leading-tight bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
             Page Not Found
           </h2>
           <p className="text-xl text-white/50 max-w-sm mx-auto leading-relaxed">
@@ -24,7 +24,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link 
             to="/" 
-            className="bg-accent text-luxury-charcoal font-black py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 group w-full sm:w-auto"
+            className="bg-accent text-luxury-charcoal font-bold py-4 px-8 rounded-2xl transition-all duration-500 hover:scale-[1.02] hover:shadow-accent-glow active:scale-95 flex items-center justify-center gap-2 group w-full sm:w-auto"
           >
             <Home size={20} /> Back to Home
           </Link>
