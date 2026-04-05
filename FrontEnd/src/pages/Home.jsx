@@ -161,10 +161,10 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {[
-              { from: "Chennai", to: "Pondicherry", price: "2500", time: "3h", dist: "150km" },
-              { from: "Madurai", to: "Chennai", price: "7500", time: "8h", dist: "460km" },
-              { from: "Bangalore", to: "Chennai", price: "6000", time: "6h", dist: "350km" },
-              { from: "Coimbatore", to: "Madurai", price: "3500", time: "4h", dist: "210km" }
+              { from: "Chennai", to: "Pondicherry", price: "2310", time: "3h", dist: "165km" },
+              { from: "Madurai", to: "Chennai", price: "6399", time: "8h", dist: "456km" },
+              { from: "Bangalore", to: "Chennai", price: "4859", time: "6h", dist: "347km" },
+              { from: "Coimbatore", to: "Madurai", price: "3039", time: "4h", dist: "217km" }
             ].map((route, i) => (
               <motion.div
                 key={i}

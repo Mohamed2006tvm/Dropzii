@@ -10,14 +10,16 @@ export default function PopularRoutes() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const routes = [
-    { from: "Chennai", to: "Pondicherry", distance: "150 km", price: "2500", time: "3 hrs", tag: "Coastal Scenic" },
-    { from: "Chennai", to: "Bangalore", distance: "350 km", price: "5500", time: "6 hrs", tag: "Business Hub" },
+    { from: "Chennai", to: "Pondicherry", distance: "165 km", price: "2310", time: "3 hrs", tag: "Coastal Scenic" },
+    { from: "Bangalore", to: "Chennai", distance: "347 km", price: "4859", time: "6 hrs", tag: "Business Hub" },
     { from: "Coimbatore", to: "Ooty", distance: "85 km", price: "1800", time: "3 hrs", tag: "Hill Station" },
     { from: "Madurai", to: "Rameswaram", distance: "170 km", price: "3000", time: "4 hrs", tag: "Pilgrimage" },
     { from: "Trichy", to: "Chennai", distance: "330 km", price: "5000", time: "6 hrs", tag: "State Capital" },
     { from: "Bangalore", to: "Mysore", distance: "145 km", price: "2200", time: "3 hrs", tag: "Heritage" },
     { from: "Chennai", to: "Tirupati", distance: "135 km", price: "2400", time: "3 hrs", tag: "Pilgrimage" },
-    { from: "Coimbatore", to: "Kodaikanal", distance: "175 km", price: "3200", time: "5 hrs", tag: "Popular Hilltop" }
+    { from: "Coimbatore", to: "Kodaikanal", distance: "175 km", price: "3200", time: "5 hrs", tag: "Popular Hilltop" },
+    { from: "Madurai", to: "Chennai", distance: "456 km", price: "6399", time: "8 hrs", tag: "State Capital" },
+    { from: "Coimbatore", to: "Madurai", distance: "217 km", price: "3039", time: "4 hrs", tag: "Temple City" }
   ];
 
   const filteredRoutes = routes.filter(r =>
