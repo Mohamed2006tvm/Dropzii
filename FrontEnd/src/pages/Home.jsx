@@ -212,10 +212,10 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
-              { type: "Sedan", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=600" },
-              { type: "Etios", seats: "4+1", price: "₹14/km", img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=600" },
-              { type: "SUV", seats: "7+1", price: "₹19/km", img: "https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=600" },
-              { type: "MUV (Innova)", seats: "7+1", price: "₹20/km", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=600" },
+              { type: "Sedan", seats: "4+1", price: "₹14/km", img: "/assets/Cars/sedan.jpeg" },
+              { type: "Etios", seats: "4+1", price: "₹14/km", img: "/assets/Cars/Etios.jpeg" },
+              { type: "SUV", seats: "7+1", price: "₹19/km", img: "/assets/Cars/Suv.jpeg" },
+              { type: "MUV (Innova)", seats: "7+1", price: "₹20/km", img: "/assets/Cars/Innova.jpeg" },
             ].map((v, i) => (
               <motion.div
                 key={i}
